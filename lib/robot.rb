@@ -9,13 +9,14 @@ class Robot
     "WEST" => {x: -1, y: 0}
   }.freeze
 
-  attr_reader :x, :y, :facing, :table
+  attr_reader :x, :y, :facing, :table, :placed
 
   def initialize(table)
     @table = table
     @x = 0
     @y = 0
     @facing = "NORTH"
+    @placed = false
   end
 
   def place(x, y, facing)
@@ -25,7 +26,12 @@ class Robot
     @x = x
     @y = y
     @facing = facing
+    @placed = true
     true
+  end
+
+  def placed?
+    @placed
   end
 
   def move

@@ -20,6 +20,7 @@ RSpec.describe Robot do
       expect(robot.place(2, 3, "SOUTH")).to be true
       expect(robot.place(3, 4, "EAST")).to be true
       expect(robot.place(0, 0, "WEST")).to be true
+      expect(robot.placed?).to be true
     end
 
     it "sets the position and facing when valid" do
@@ -27,6 +28,7 @@ RSpec.describe Robot do
       expect(robot.x).to eq(1)
       expect(robot.y).to eq(2)
       expect(robot.facing).to eq("NORTH")
+      expect(robot.placed?).to be true
     end
 
     it "doesn't place the robot with a invalid position" do
@@ -34,11 +36,13 @@ RSpec.describe Robot do
       expect(robot.place(0, -1, "SOUTH")).to be false
       expect(robot.place(5, 0, "EAST")).to be false
       expect(robot.place(0, -5, "WEST")).to be false
+      expect(robot.placed?).to be false
     end
 
     it "doesn't place the robot with a invalid facing" do
       expect(robot.place(0, 0, "UNKNOWN")).to be false
       expect(robot.place(0, 0, "")).to be false
+      expect(robot.placed?).to be false
     end
   end
 
