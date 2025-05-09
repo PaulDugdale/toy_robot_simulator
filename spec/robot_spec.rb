@@ -10,6 +10,7 @@ RSpec.describe Robot do
       expect(robot.table).to be(table)
       expect(robot.x).to eq(0)
       expect(robot.y).to eq(0)
+      expect(robot.facing).to eq("NORTH")
     end
   end
 
@@ -38,6 +39,32 @@ RSpec.describe Robot do
     it "doesn't place the robot with a invalid facing" do
       expect(robot.place(0, 0, "UNKNOWN")).to be false
       expect(robot.place(0, 0, "")).to be false
+    end
+  end
+
+  describe "#move" do
+    context "robot has been placed at a valid location" do
+      before { robot.place(3, 1, "EAST") }
+
+      it "moves the robot to the correct destination" do
+        expect(robot.move).to be true
+        expect(robot.x).to eq(4)
+        expect(robot.y).to eq(1)
+        expect(robot.facing).to eq("EAST")
+      end
+
+      it "doesn't move the robot off the edge of the table" do
+        expect(robot.move).to be true
+        expect(robot.x).to eq(4)
+        expect(robot.y).to eq(1)
+        expect(robot.facing).to eq("EAST")
+
+        # Move is ignored
+        expect(robot.move).to be false
+        expect(robot.x).to eq(4)
+        expect(robot.y).to eq(1)
+        expect(robot.facing).to eq("EAST")
+      end
     end
   end
 end

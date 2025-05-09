@@ -1,12 +1,21 @@
 class Robot
   FACINGS = ["NORTH", "SOUTH", "EAST", "WEST"].freeze
 
+  # 0,0 is in the south-west corner
+  OFFSETS = {
+    "NORTH" => {x: 0, y: 1},
+    "SOUTH" => {x: 0, y: -1},
+    "EAST" => {x: 1, y: 0},
+    "WEST" => {x: -1, y: 0}
+  }.freeze
+
   attr_reader :x, :y, :facing, :table
 
   def initialize(table)
     @table = table
     @x = 0
     @y = 0
+    @facing = "NORTH"
   end
 
   def place(x, y, facing)
@@ -16,6 +25,20 @@ class Robot
     @x = x
     @y = y
     @facing = facing
+    true
+  end
+
+  def move
+    offset = OFFSETS[facing]
+    return false unless offset
+
+    new_x = @x + offset[:x]
+    new_y = @y + offset[:y]
+    return false unless table.position_valid?(new_x, new_y)
+
+    @x = new_x
+    @y = new_y
+
     true
   end
 end
