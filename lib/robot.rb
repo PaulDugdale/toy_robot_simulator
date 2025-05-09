@@ -35,6 +35,8 @@ class Robot
   end
 
   def move
+    return false unless placed?
+
     offset = OFFSETS[facing]
     return false unless offset
 

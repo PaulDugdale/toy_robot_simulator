@@ -47,27 +47,69 @@ RSpec.describe Robot do
   end
 
   describe "#move" do
-    context "robot has been placed at a valid location" do
-      before { robot.place(3, 1, "EAST") }
+    context "robot has not been placed " do
+      it "is ignored" do
+        expect { robot.move }.not_to change { [robot.x, robot.y, robot.facing] }
+      end
+    end
 
-      it "moves the robot to the correct destination" do
+    context "robot has been placed" do
+      before { robot.place(0, 0, "NORTH") }
+
+      it "moves north" do
+        robot.place(0, 0, "NORTH")
         expect(robot.move).to be true
-        expect(robot.x).to eq(4)
+        expect(robot.x).to eq(0)
         expect(robot.y).to eq(1)
-        expect(robot.facing).to eq("EAST")
       end
 
-      it "doesn't move the robot off the edge of the table" do
+      it "moves south" do
+        robot.place(4, 4, "SOUTH")
         expect(robot.move).to be true
         expect(robot.x).to eq(4)
-        expect(robot.y).to eq(1)
-        expect(robot.facing).to eq("EAST")
+        expect(robot.y).to eq(3)
+      end
 
-        # Move is ignored
+      it "moves east" do
+        robot.place(0, 0, "EAST")
+        expect(robot.move).to be true
+        expect(robot.x).to eq(1)
+        expect(robot.y).to eq(0)
+      end
+
+      it "moves west" do
+        robot.place(4, 4, "WEST")
+        expect(robot.move).to be true
+        expect(robot.x).to eq(3)
+        expect(robot.y).to eq(4)
+      end
+
+      it "ignores move north off the table" do
+        robot.place(4, 4, "NORTH")
         expect(robot.move).to be false
         expect(robot.x).to eq(4)
-        expect(robot.y).to eq(1)
-        expect(robot.facing).to eq("EAST")
+        expect(robot.y).to eq(4)
+      end
+
+      it "ignores move south off the table" do
+        robot.place(0, 0, "SOUTH")
+        expect(robot.move).to be false
+        expect(robot.x).to eq(0)
+        expect(robot.y).to eq(0)
+      end
+
+      it "ignores move east off the table" do
+        robot.place(4, 4, "EAST")
+        expect(robot.move).to be false
+        expect(robot.x).to eq(4)
+        expect(robot.y).to eq(4)
+      end
+
+      it "ignores move west off the table" do
+        robot.place(0, 0, "WEST")
+        expect(robot.move).to be false
+        expect(robot.x).to eq(0)
+        expect(robot.y).to eq(0)
       end
     end
   end
