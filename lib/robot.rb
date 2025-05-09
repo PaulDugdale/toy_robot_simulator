@@ -65,4 +65,9 @@ class Robot
     @facing = FACINGS[(index - 1) % FACINGS.size]
     true
   end
+
+  def report
+    return nil unless placed?
+    "#{@x},#{@y},#{@facing}"
+  end
 end

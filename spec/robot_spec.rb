@@ -193,4 +193,24 @@ RSpec.describe Robot do
       end
     end
   end
+
+  describe "#report" do
+    context "robot has not been placed " do
+      it "is ignored" do
+        expect(robot.report).to be_nil
+      end
+    end
+
+    context "robot has been placed" do
+      before { robot.place(0, 0, "NORTH") }
+
+      it "reports its position and facing" do
+        robot.place(1, 2, "EAST")
+        expect(robot.report).to eq "1,2,EAST"
+
+        robot.place(3, 4, "SOUTH")
+        expect(robot.report).to eq "3,4,SOUTH"
+      end
+    end
+  end
 end
