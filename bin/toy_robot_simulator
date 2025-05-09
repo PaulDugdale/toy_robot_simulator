@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/toy_robot_simulator"
+
+
+file_path = ARGV[0]
+
+input = if file_path && File.exist?(file_path)
+          File.read(file_path)
+        else
+          $stdin.read
+        end
+
+simulator = ToyRobotSimulator.new
+
+input.each_line do |line|
+  command = line.strip
+
+  next if command.empty?
+
+  result = simulator.execute_command(command)
+
+  puts result if result.is_a?(String) && !result.empty?
+end
