@@ -113,4 +113,84 @@ RSpec.describe Robot do
       end
     end
   end
+
+  describe "#right" do
+    context "robot has not been placed " do
+      it "is ignored" do
+        expect { robot.right }.not_to change { [robot.x, robot.y, robot.facing] }
+      end
+    end
+
+    context "robot has been placed" do
+      before { robot.place(0, 0, "NORTH") }
+
+      it "rotates from NORTH to EAST" do
+        robot.place(0, 0, "NORTH")
+        expect(robot.right).to be true
+        expect { robot.x }.to_not change { [robot.x, robot.y] }
+        expect(robot.facing).to eq("EAST")
+      end
+
+      it "rotates from EAST to SOUTH" do
+        robot.place(0, 0, "EAST")
+        expect(robot.right).to be true
+        expect { robot.x }.to_not change { [robot.x, robot.y] }
+        expect(robot.facing).to eq("SOUTH")
+      end
+
+      it "rotates from SOUTH to WEST" do
+        robot.place(0, 0, "SOUTH")
+        expect(robot.right).to be true
+        expect { robot.x }.to_not change { [robot.x, robot.y] }
+        expect(robot.facing).to eq("WEST")
+      end
+
+      it "rotates from WEST to NORTH" do
+        robot.place(0, 0, "WEST")
+        expect(robot.right).to be true
+        expect { robot.x }.to_not change { [robot.x, robot.y] }
+        expect(robot.facing).to eq("NORTH")
+      end
+    end
+  end
+
+  describe "#left" do
+    context "robot has not been placed " do
+      it "is ignored" do
+        expect { robot.left }.not_to change { [robot.x, robot.y, robot.facing] }
+      end
+    end
+
+    context "robot has been placed" do
+      before { robot.place(0, 0, "NORTH") }
+
+      it "rotates from NORTH to WEST" do
+        robot.place(0, 0, "NORTH")
+        expect(robot.left).to be true
+        expect { robot.x }.to_not change { [robot.x, robot.y] }
+        expect(robot.facing).to eq("WEST")
+      end
+
+      it "rotates from WEST to SOUTH" do
+        robot.place(0, 0, "WEST")
+        expect(robot.left).to be true
+        expect { robot.x }.to_not change { [robot.x, robot.y] }
+        expect(robot.facing).to eq("SOUTH")
+      end
+
+      it "rotates from SOUTH to EAST" do
+        robot.place(0, 0, "SOUTH")
+        expect(robot.left).to be true
+        expect { robot.x }.to_not change { [robot.x, robot.y] }
+        expect(robot.facing).to eq("EAST")
+      end
+
+      it "rotates from EAST to NORTH" do
+        robot.place(0, 0, "EAST")
+        expect(robot.left).to be true
+        expect { robot.x }.to_not change { [robot.x, robot.y] }
+        expect(robot.facing).to eq("NORTH")
+      end
+    end
+  end
 end

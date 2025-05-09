@@ -1,5 +1,5 @@
 class Robot
-  FACINGS = ["NORTH", "SOUTH", "EAST", "WEST"].freeze
+  FACINGS = ["NORTH", "EAST", "SOUTH", "WEST"].freeze
 
   # 0,0 is in the south-west corner
   OFFSETS = {
@@ -47,6 +47,22 @@ class Robot
     @x = new_x
     @y = new_y
 
+    true
+  end
+
+  def right
+    return false unless placed?
+
+    index = FACINGS.index(@facing)
+    @facing = FACINGS[(index + 1) % FACINGS.size]
+    true
+  end
+
+  def left
+    return false unless placed?
+
+    index = FACINGS.index(@facing)
+    @facing = FACINGS[(index - 1) % FACINGS.size]
     true
   end
 end
